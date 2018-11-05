@@ -30,6 +30,9 @@ class ResultCardWidget extends StatelessWidget {
                           model: pricesViewModel,
                           child: ScopedModelDescendant<PricesViewModel>(
                               builder: (context, child, model) {
+                                if(!model.found) {
+                                  return Text("not found");
+                                }
                                 if(model.marketPrice == null) {
                                   return Text("now loading");
                                 } else {

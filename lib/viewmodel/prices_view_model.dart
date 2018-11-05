@@ -6,22 +6,37 @@ import 'dart:math';
 import 'package:meta/meta.dart';
 
 class PricesViewModel extends Model {
-  PricesViewModel({@required this.target,@required this.repository});
+  PricesViewModel({@required this.target, @required this.repository});
 
   final String target;
   final ScrapeRepository repository;
 
   MarketPriceModel _marketPrice;
+
   MarketPriceModel get marketPrice => _marketPrice;
 
-  set marketPrice(MarketPriceModel newMarketPrice){
+  set marketPrice(MarketPriceModel newMarketPrice) {
     _marketPrice = newMarketPrice;
     notifyListeners();
   }
 
+  bool _found = true;
+
+  bool get found => _found;
+
+  set found(bool found) {
+    _found = found;
+    notifyListeners();
+  }
+
   void calcPriceModel() async {
-    repository.getScrapeResult(target).then((result) {
+    repository
+        .getScrapeResult(target)
+        .then((result) {
       marketPrice = calcMarketPrice(result);
+    })
+        .catchError((e) {
+      found = false;
     });
   }
 

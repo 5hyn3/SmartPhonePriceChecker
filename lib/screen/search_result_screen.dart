@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scraping/repository/geo_mobile_scrape_repository.dart';
 import 'package:flutter_scraping/repository/iosys_scrape_repository.dart';
 import 'package:flutter_scraping/repository/janpara_scrape_repository.dart';
+import 'package:flutter_scraping/repository/musbi_scrape_repository.dart';
 import 'package:flutter_scraping/repository/sofmap_scrape_repository.dart';
 import 'package:flutter_scraping/viewmodel/prices_view_model.dart';
 import 'package:flutter_scraping/widget/result_card_widget.dart';
@@ -23,11 +24,14 @@ class SearchResultScreen extends StatelessWidget {
         target: searchKeyWord, repository: SofmapScrapeRepository());
     final geoMobilePricesViewModel = PricesViewModel(
         target: searchKeyWord, repository: GeoMobileScrapeRepository());
+    final musbiPricesViewModel = PricesViewModel(
+        target: searchKeyWord, repository: MusbiScrapeRepository());
 
     iosysPricesViewModel.calcPriceModel();
     janparaPricesViewModel.calcPriceModel();
     sofmapPricesViewModel.calcPriceModel();
     geoMobilePricesViewModel.calcPriceModel();
+    musbiPricesViewModel.calcPriceModel();
 
     return Scaffold(
         appBar: AppBar(
@@ -42,7 +46,9 @@ class SearchResultScreen extends StatelessWidget {
             ResultCardWidget(
                 title: "sofmap", pricesViewModel: sofmapPricesViewModel),
             ResultCardWidget(
-                title: "GeoMobile", pricesViewModel: geoMobilePricesViewModel)
+                title: "GeoMobile", pricesViewModel: geoMobilePricesViewModel),
+            ResultCardWidget(
+                title: "musbi", pricesViewModel: musbiPricesViewModel)
           ],
         ));
   }
